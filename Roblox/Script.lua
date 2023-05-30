@@ -22,7 +22,7 @@ Tab1:CreateButton("Silent Aim", function()
             ["fov"] = 100,
             ["hitpart"] = "Head",
             ["circlevis"] = true,
-            ["wallbang"] = false,
+            ["wallbang"] = true,
             ["circcolor"] = Color3.fromRGB(228, 9, 191)
         }
     }
