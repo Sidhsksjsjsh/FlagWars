@@ -5,7 +5,7 @@ local Window_1 = Library:NewWindow("Flag Wars")
 local Tab1 = Window_1:NewSection("Main")
 local Tab2 = Window_1:NewSection("Gun Config")
 
-Tab1:CreateButton("Silent Aim", function()
+Tab1:CreateButton("Silent Aim V1", function()
     local currPlayer = game:GetService('Players').LocalPlayer
     local servPlayer = game:GetService('Players')
 
@@ -22,7 +22,7 @@ Tab1:CreateButton("Silent Aim", function()
             ["fov"] = 100,
             ["hitpart"] = "Head",
             ["circlevis"] = true,
-            ["wallbang"] = true,
+            ["wallbang"] = false,
             ["circcolor"] = Color3.fromRGB(228, 9, 191)
         }
     }
@@ -117,6 +117,10 @@ Tab1:CreateButton("Silent Aim", function()
                 return oldNamecall(self, ...)
             end
         )
+end)
+
+Tab1:CreateButton("Silent Aim V2", function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/kalasthrowaway/stuff/main/flagwars.lua"))()
 end)
 
 Tab1:CreateButton("Trigger Bot", function()
@@ -304,21 +308,13 @@ Tab1:CreateButton("ESP", function()
     
                         local topTag = Instance.new("TextLabel", dohmESPTag)
                         topTag.TextWrapped = true
-                        topTag.Text =
-                            (v.Name ..
-                            " | " ..
-                                numberRound((currPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude / 3) ..
-                                    "m" .. " | " .. getEquippedWeapon(v))
+                        topTag.Text = v.Name .. " | " .. numberRound((currPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude / 3) .. "m" .. " | " .. getEquippedWeapon(v) .. " | " .. tostring(v.Character.Humanoid.Health) .. "/" .. tostring(v.Character.Humanoid.MaxHealth)
                         topTag.Size = UDim2.new(1, 0, 1, 0)
                         topTag.TextYAlignment = "Top"
                         topTag.TextColor3 = Color3.new(1, 1, 1)
                         topTag.BackgroundTransparency = 1
                     else
-                        v.Character.Head.dohmESPTag.TextLabel.Text =
-                            (v.Name ..
-                            " | " ..
-                                numberRound((currPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude / 3) ..
-                                    "m" .. " | " .. getEquippedWeapon(v))
+                        v.Character.Head.dohmESPTag.TextLabel.Text = v.Name .. " | " .. numberRound((currPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude / 3) .. "m" .. " | " .. getEquippedWeapon(v)  .. " | " .. tostring(v.Character.Humanoid.Health) .. "/" .. tostring(v.Character.Humanoid.MaxHealth)
                     end
                 end
             end
@@ -375,12 +371,12 @@ local Mods = {
     ["GravityFactor"] = 0,
     ["MaxSpread"] = 0,
     ["MinSpread"] = 0,
-    ["HitDamage"] = math.huge,
+    ["HitDamage"] = 9e9,
     ["NumProjectiles"] = 1,
     -- Melee (Shovel, Sword, etc)
     ["Cooldown"] = 0,
     ["Value"] = 0,
-    ["DirtDamage"] = math.huge,
+    ["DirtDamage"] = 9e9,
     ["SwingCooldown"] = 0,
     ["HitRate"] = 0,
 }
