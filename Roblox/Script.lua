@@ -124,6 +124,7 @@ end)
 
 Tab1:CreateButton("Silent Aim V2", function()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/kalasthrowaway/stuff/main/flagwars.lua"))()
+        notify.new("success","Silent Aim","Silent Aim Enabled, bullets will follow the movement of the enemy")
 end)
 
 Tab1:CreateButton("Trigger Bot", function()
@@ -192,6 +193,8 @@ Tab1:CreateButton("Kill All ( Sniper )", function()
     game:GetService("ReplicatedStorage").WeaponsSystem.Network.WeaponHit:FireServer(unpack(args))
     end
     end
+        
+   notify.new("success","Cheat Enabled","start killing all enemies one by one.")
 end)
 
 Tab1:CreateButton("Hitbox Expander", function()
@@ -353,7 +356,8 @@ Tab1:CreateButton("Bring All ( Client Sided )", function()
 end)
 
 Tab2:CreateButton("Gun Mods", function()
-    local mt = getrawmetatable(game)
+      notify.new("warning","Cheat Enabled","reset to work")
+local mt = getrawmetatable(game)
 setreadonly(mt, false)
 local index = mt.__index
 
@@ -396,12 +400,7 @@ Tab3:CreateButton("Teleport to flag", function()
 for i,v in pairs(game.Workspace:GetDescendants()) do
         if v:IsA("BasePart") then
             if v.Name:lower() == "flag" then
-                 if v.Name:lower():FindFirstChild("flag") then
-                     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
-                     notify.new("success","Steal the flag","Teleports you to the flag location")
-                 else
-                     notify.new("error","Steal the flag","no flags detected")
-                end
+                 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
             end
         end
     end
