@@ -187,7 +187,7 @@ Tab1:CreateToggle("Auto Kill ( Sniper )", function(state)
         }
     }
     
-    while wait() do
+    while wait(2) do
     if _G.VState == false then break end
     game:GetService("ReplicatedStorage").WeaponsSystem.Network.WeaponHit:FireServer(unpack(args))
     end
