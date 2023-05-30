@@ -4,6 +4,9 @@ local Window_1 = Library:NewWindow("Flag Wars")
 
 local Tab1 = Window_1:NewSection("Main")
 local Tab2 = Window_1:NewSection("Gun Config")
+local Tab3 = Window_1:NewSection("Flag")
+
+local notify = loadstring(game:HttpGet("https://raw.githubusercontent.com/Jxereas/UI-Libraries/main/notification_gui_library.lua"))()
 
 Tab1:CreateButton("Silent Aim V1", function()
     local currPlayer = game:GetService('Players').LocalPlayer
@@ -387,4 +390,19 @@ mt.__index = function(a,b)
     end
     return index(a,b)
 end
+end)
+
+Tab3:CreateButton("Teleport to flag", function()
+for i,v in pairs(game.Workspace:GetDescendants()) do
+        if v:IsA("BasePart") then
+            if v.Name:lower() == "flag" then
+                 if v.Name:lower():FindFirstChild("flag") then
+                     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+                     notify.new("success","Steal the flag","Teleports you to the flag location")
+                 else
+                     notify.new("error","Steal the flag","no flags detected")
+                end
+            end
+        end
+    end
 end)
