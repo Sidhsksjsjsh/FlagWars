@@ -150,8 +150,7 @@ Tab1:CreateButton("Trigger Bot", function()
     end)
 end)
 
-Tab1:CreateToggle("Auto Kill ( Sniper )", function(state)
-        _G.VState = state
+Tab1:CreateButton("Kill All ( Sniper )", function()
     local servPlayer = game:GetService("Players")
     local currPlayer = game:GetService('Players').LocalPlayer
     
@@ -187,10 +186,7 @@ Tab1:CreateToggle("Auto Kill ( Sniper )", function(state)
         }
     }
     
-    while wait(2) do
-    if _G.VState == false then break end
     game:GetService("ReplicatedStorage").WeaponsSystem.Network.WeaponHit:FireServer(unpack(args))
-    end
     end
     end
 end)
