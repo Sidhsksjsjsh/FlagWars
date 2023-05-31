@@ -173,7 +173,7 @@ Tab1:CreateButton("Kill All ( Sniper )", function()
     
     for _, v in pairs(servPlayer:GetPlayers()) do
         if v.Name ~= currPlayer.Name then
-            task.wait(1)
+            task.wait()
     local args = {
         [1] = game:GetService("Players").LocalPlayer.Character[currWeapon],
         [2] = {
@@ -194,7 +194,50 @@ Tab1:CreateButton("Kill All ( Sniper )", function()
     end
     end
         
-   notify.new("success","Cheat Enabled","start killing all enemies one by one.")
+   notify.new("success","Cheat Enabled ( Sniper )","start killing all enemies")
+end)
+
+Tab1:CreateButton("Kill All ( M4A1 )", function()
+    local servPlayer = game:GetService("Players")
+    local currPlayer = game:GetService('Players').LocalPlayer
+    
+    function getEquippedWeapon(player)
+        local char = player.Character
+        local weapon = char and char:FindFirstChildWhichIsA("Tool")
+    
+        if weapon ~= nil then
+            return weapon.Name
+        else
+            return "Holstered"
+        end
+    end
+    
+    local currWeapon = getEquippedWeapon(currPlayer)
+    
+    for _, v in pairs(servPlayer:GetPlayers()) do
+        if v.Name ~= currPlayer.Name then
+            task.wait()
+    local args = {
+    [1] = game:GetService("Players").LocalPlayer.Character.M4A1,
+    [2] = {
+        ["p"] = Vector3.new(519.5029296875, 44.33285903930664, 144.1508331298828),
+        ["pid"] = 1,
+        ["part"] = v.Character.Head,
+        ["d"] = 42.01991271972656,
+        ["maxDist"] = 40.19593811035156,
+        ["h"] = v.Character.Humanoid,
+        ["m"] = Enum.Material.SmoothPlastic,
+        ["sid"] = 5,
+        ["t"] = 0.03969588453359542,
+        ["n"] = Vector3.new(-0.12755782902240753, -0.40483540296554565, -0.9054485559463501)
+    }
+}
+
+game:GetService("ReplicatedStorage").WeaponsSystem.Network.WeaponHit:FireServer(unpack(args))
+    end
+    end
+        
+   notify.new("success","Cheat Enabled ( M4A1 )","start killing all enemies")
 end)
 
 Tab1:CreateButton("Hitbox Expander", function()
