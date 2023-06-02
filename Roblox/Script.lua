@@ -461,12 +461,12 @@ local Mods = {
     ["GravityFactor"] = 0,
     ["MaxSpread"] = 0,
     ["MinSpread"] = 0,
-    ["HitDamage"] = math.huge,
+    ["HitDamage"] = 9e9,
     ["NumProjectiles"] = 1,
     -- Melee (Shovel, Sword, etc)
     ["Cooldown"] = 0,
     ["Value"] = 0,
-    ["DirtDamage"] = math.huge,
+    ["DirtDamage"] = 9e9,
     ["SwingCooldown"] = 0,
     ["HitRate"] = 0,
 }
