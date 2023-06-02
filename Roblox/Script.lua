@@ -441,7 +441,7 @@ end
 end)
 --]]
 
-Tab2:CreateButton("inf bullet and no recoil", function()
+Tab2:CreateButton("Gun Mod", function()
       notify.new("warning","Cheat Enabled","reset to work")
 local mt = getrawmetatable(game)
 setreadonly(mt, false)
@@ -461,12 +461,12 @@ local Mods = {
     ["GravityFactor"] = 0,
     ["MaxSpread"] = 0,
     ["MinSpread"] = 0,
-    ["HitDamage"] = 9e9,
+    ["HitDamage"] = math.huge,
     ["NumProjectiles"] = 1,
     -- Melee (Shovel, Sword, etc)
     ["Cooldown"] = 0,
     ["Value"] = 0,
-    ["DirtDamage"] = 9e9,
+    ["DirtDamage"] = math.huge,
     ["SwingCooldown"] = 0,
     ["HitRate"] = 0,
 }
