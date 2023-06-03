@@ -114,7 +114,7 @@ Tab1:CreateButton("Silent Aim V1", function()
                     target = isClosestPlayer()
                     if target then
                         Args[2]["part"] = target.Character[getgenv().GameSettings.SilentAim.hitpart]
-                        return self.FireServer(self, unpack(Args))
+                        return self:FireServer(self, unpack(Args))
                     end
                 end
                 return oldNamecall(self, ...)
