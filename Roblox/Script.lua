@@ -496,7 +496,6 @@ end)
 Tab3:AddButton({
 Name = "Rapid Fire & Infinite Ammo",
 Callback = function()
-      notify.new("warning","Cheat Enabled","reset to work")
 local mt = getrawmetatable(game)
 setreadonly(mt, false)
 local index = mt.__index
@@ -600,12 +599,12 @@ end
 
 
 _G.Slider = {
-    FovRadius = 0,
-    FovSides = 0,
-    FovT = 0,
+    FovRadius = 90,
+    FovSides = 64,
+    FovT = 5,
     FovColor = Color3.new(1, 1, 0),
     SilentHitbox = "",
-    SilentDirec = 0
+    SilentDirec = 50
 }
 
 Tab2:AddSlider({
@@ -655,7 +654,7 @@ Callback = function(Value)
 end  
 })
 
-Tab:AddDropdown({
+Tab2:AddDropdown({
 Name = "Bullet Target",
 Default = "",
 Options = {'Head', 'UpperTorso', 'LowerTorso'},
