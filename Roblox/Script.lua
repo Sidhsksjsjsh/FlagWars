@@ -61,6 +61,114 @@ Callback = function()
 FOVring.Visible = true
 FOVring.Thickness = 1.5
 FOVring.Radius = 100
+FOVring.Transparency = 0
+FOVring.Color = Color3.fromRGB(228, 9, 191)
+FOVring.Position = currCamera.ViewportSize/2
+
+
+    function isSameTeam(player)
+        if player.team ~= currPlayer.team and player.team ~= servTeams["Neutral"] then
+            return false
+        else
+            return true
+        end
+    end
+
+    function isDead(player)
+        if
+            player == nil or player.Character == nil or player.Character:FindFirstChildWhichIsA("Humanoid") == nil or
+                player.Character.Humanoid.Health <= 0
+        then
+            return true
+        else
+            return false
+        end
+    end
+
+
+        local function isClosestPlayer()
+            local target
+            local dist = math.huge
+            for _, v in next, servPlayer:GetPlayers() do
+                if
+                    not isDead(v) and v ~= currPlayer and not isSameTeam(v) and v.Character:FindFirstChild("Head") and
+                        getgenv().GameSettings.SilentAim.active
+                then
+                    local pos, visible = currCamera:WorldToScreenPoint(v.Character.HumanoidRootPart.Position)
+                    local magnitude = (Vector2.new(currMouse.X, currMouse.Y) - Vector2.new(pos.X, pos.Y)).magnitude
+                    if magnitude < (getgenv().GameSettings.SilentAim.fov) then
+                        if magnitude < dist then
+                            if getgenv().GameSettings.SilentAim.wallbang then
+                                target = v
+                                dist = magnitude
+                            else
+                                if visible then
+                                    target = v
+                                    dist = magnitude
+                            end
+                        end
+    
+    
+                        end
+                    end
+                end
+            end
+            return target
+        end
+    
+    
+        local target
+        local gmt = getrawmetatable(game)
+        setreadonly(gmt, false)
+        local oldNamecall = gmt.__namecall
+    
+        gmt.__namecall =
+            newcclosure(
+            function(self, ...)
+                local Args = {...}
+                local method = getnamecallmethod()
+                if tostring(self) == "WeaponHit" and tostring(method) == "FireServer" then
+                    target = isClosestPlayer()
+                    if target then
+                        Args[2]["part"] = target.Character[getgenv().GameSettings.SilentAim.hitpart]
+                        return self.FireServer(self, unpack(Args))
+                    end
+                end
+                return oldNamecall(self, ...)
+            end
+        )
+end
+})
+--[[
+Tab:AddButton({
+Name = "Silent Aim V1",
+Callback = function()
+    local currPlayer = game:GetService('Players').LocalPlayer
+    local servPlayer = game:GetService('Players')
+
+    local RunService = game:GetService('RunService')
+    local servTeams = game:GetService("Teams")
+
+    local currMouse = currPlayer:GetMouse()
+    local currCamera = game:GetService("Workspace").CurrentCamera
+
+
+    getgenv().GameSettings = {
+        SilentAim = {
+            ["active"] = true,
+            ["fov"] = 100,
+            ["hitpart"] = "Head",
+            ["circlevis"] = true,
+            ["wallbang"] = true,
+            ["circcolor"] = Color3.fromRGB(228, 9, 191)
+        }
+    }
+
+
+    local FOVring = Drawing.new("Circle")
+FOVring.Visible = true
+FOVring.Thickness = 1.5
+FOVring.Radius = 100
 FOVring.Transparency = 1
 FOVring.Color = Color3.fromRGB(228, 9, 191)
 FOVring.Position = currCamera.ViewportSize/2
@@ -203,7 +311,110 @@ Tab:AddButton({
 Name = "Silent Aim V2",
 Callback = function()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/kalasthrowaway/stuff/main/flagwars.lua"))()
-        notify.new("success","Silent Aim","Silent Aim Enabled, bullets will follow the movement of the enemy")
+        -- notify.new("success","Silent Aim","Silent Aim Enabled, bullets will follow the movement of the enemy")
+end
+})
+
+_G.BulletTrackT = nil
+Tab:AddButton({
+Name = "Silent Aim V3",
+Callback = function()
+    local currPlayer = game:GetService('Players').LocalPlayer
+    local servPlayer = game:GetService('Players')
+
+    local RunService = game:GetService('RunService')
+    local servTeams = game:GetService("Teams")
+
+    local currMouse = currPlayer:GetMouse()
+    local currCamera = game:GetService("Workspace").CurrentCamera
+
+
+    getgenv().GameSettings = {
+        SilentAim = {
+            ["active"] = true,
+            ["fov"] = 100,
+            ["hitpart"] = "Head",
+            ["circlevis"] = true,
+            ["wallbang"] = true,
+            ["circcolor"] = Color3.fromRGB(228, 9, 191)
+        }
+    }
+
+
+    local FOVring = Drawing.new("Circle")
+FOVring.Visible = true
+FOVring.Thickness = 1.5
+FOVring.Radius = 50
+FOVring.Transparency = 0
+FOVring.Color = Color3.fromRGB(228, 9, 191)
+FOVring.Position = currCamera.ViewportSize/2
+
+
+    function isSameTeam(player)
+        if player.team ~= currPlayer.team and player.team ~= servTeams["Neutral"] then
+            return false
+        else
+            return true
+        end
+    end
+
+    function isDead(player)
+        if
+            player == nil or player.Character == nil or player.Character:FindFirstChildWhichIsA("Humanoid") == nil or
+                player.Character.Humanoid.Health <= 0
+        then
+            return true
+        else
+            return false
+        end
+    end
+
+
+        local function isClosestPlayer()
+            local target
+            local dist = math.huge
+            for _, v in next, servPlayer:GetPlayers() do
+                if
+                    not isDead(v) and v ~= currPlayer and not isSameTeam(v) and v.Character:FindFirstChild("Head") and
+                        getgenv().GameSettings.SilentAim.active
+                then
+                    local pos, visible = currCamera:WorldToScreenPoint(v.Character.HumanoidRootPart.Position)
+                    local magnitude = (Vector2.new(currMouse.X, currMouse.Y) - Vector2.new(pos.X, pos.Y)).magnitude
+                    if magnitude < (getgenv().GameSettings.SilentAim.fov) then
+                        if magnitude < dist then
+                            if getgenv().GameSettings.SilentAim.wallbang then
+                                target = v
+                                dist = magnitude
+                            else
+                                if visible then
+                                    target = v
+                                    dist = magnitude
+                            end
+                        end
+    
+    
+                        end
+                    end
+                end
+            end
+            return target
+        end
+    
+    
+        local old
+old = hookmetamethod(game, "__namecall", function(Self, ...)
+    local Args = {...}
+    if Self.Name == "Shoot" and _G.BulletTrackT ~= nil then
+        local base = _G.BulletTrackT.Character.Head
+        local velocity = base.AssemblyLinearVelocity
+        local aimpos = base.Position + (velocity * Vector3.new(50 / 200, 0, 50 / 200))
+        Args[3] = aimpos
+            Args[2] = _G.BulletTrackT.Character.Head.Position
+        return old(Self, unpack(Args))
+    end
+    return old(Self, unpack(Args))
+end)
+
 end
 })
 
@@ -561,7 +772,7 @@ local Mouse = LocalPlayer:GetMouse()
 _G.Raven = {
     Silent = false,
     TeamC = false,
-    FovC = false,
+    FovC = true,
     Wallbang = false
 }
 
