@@ -780,7 +780,7 @@ Tab2:AddToggle({
 Name = "Bullet Track",
 Default = false,
 Callback = function(Value)
-     _G.Raven.Silent = Value
+     _G.Silent = Value
 end
 })
 
@@ -788,7 +788,7 @@ Tab2:AddToggle({
 Name = "Team Check",
 Default = false,
 Callback = function(Value)
-     _G.Raven.TeamC = Value
+     _G.TeamC = Value
 end
 })
 
@@ -796,7 +796,7 @@ Tab2:AddToggle({
 Name = "Fov Circle",
 Default = false,
 Callback = function(Value)
-     _G.Raven.FovC = Value
+     _G.FovC = Value
 end
 })
 
@@ -804,7 +804,7 @@ Tab2:AddToggle({
 Name = "Wallhack",
 Default = false,
 Callback = function(Value)
-     _G.Raven.Wallbang = Value
+     _G.Wallbang = Value
 end
 })
 
@@ -827,7 +827,7 @@ Color = Color3.fromRGB(255,255,255),
 Increment = 1,
 ValueName = "Size",
 Callback = function(Value)
-      _G.Slider.FovRadius = Value
+      _G.FovRadius = Value
 end
 })
 
@@ -840,7 +840,7 @@ Color = Color3.fromRGB(255,255,255),
 Increment = 1,
 ValueName = "Sides",
 Callback = function(Value)
-      _G.Slider.FovSides = Value
+      _G.FovSides = Value
 end
 })
 
@@ -853,7 +853,7 @@ Color = Color3.fromRGB(255,255,255),
 Increment = 1,
 ValueName = "Thickness",
 Callback = function(Value)
-      _G.Slider.FovT = Value
+      _G.FovT = Value
 end
 })
 
@@ -861,7 +861,7 @@ Tab2:AddColorpicker({
 Name = "Fov Color",
 Default = Color3.fromRGB(255, 0, 0),
 Callback = function(Value)
-    _G.Slider.FovColor = Color3.new(Value)
+    _G.FovColor = Color3.new(Value)
 end  
 })
 
@@ -870,7 +870,7 @@ Name = "Bullet Target",
 Default = "",
 Options = {'Head', 'UpperTorso', 'LowerTorso'},
 Callback = function(Value)
-    _G.Slider.SilentHitbox = Value
+    _G.SilentHitbox = Value
 end    
 })
 
@@ -883,16 +883,16 @@ Color = Color3.fromRGB(255,255,255),
 Increment = 1,
 ValueName = "% Prediction",
 Callback = function(Value)
-      _G.Slider.SilentDirec = Value
+      _G.SilentDirec = Value
 end
 })
 
-local silentFovRad = _G.Slider.FovRadius
-local silentFovColor = _G.Slider.FovColor
-local silentFovVisible = _G.Raven.FovC
-local silentNumSides = _G.Slider.FovSides
-local silentThickness = _G.Slider.FovT
-local silentAimPart = _G.Slider.SilentDirec
+local silentFovRad = _G.FovRadius
+local silentFovColor = _G.FovColor
+local silentFovVisible = _G.FovC
+local silentNumSides = _G.FovSides
+local silentThickness = _G.FovT
+local silentAimPart = _G.ilentDirec
 
 
 local SilentFovCircle = Drawing.new('Circle')
@@ -915,11 +915,11 @@ _G.Raven = {
 }
 --]]
 local function silentClosetPlayer()
-    local MaximumDistance = _G.Slider.FovRadius
+    local MaximumDistance = _G.FovRadius
 
     for _, v in next, Players:GetPlayers() do
         if v.Name ~= LocalPlayer.Name then
-            if _G.Raven.TeamC == true then
+            if _G.TeamC == true then
                 if v.Team ~= LocalPlayer.Team then
                     if v.Character ~= nil then
                         if v.Character:FindFirstChild("HumanoidRootPart") then
@@ -955,15 +955,15 @@ end
 
 RunService.RenderStepped:Connect(function()
     SilentFovCircle.Position = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y / 2)
-    SilentFovCircle.Radius = _G.Slider.FovRadius
+    SilentFovCircle.Radius = _G.FovRadius
     SilentFovCircle.Filled = false
-    SilentFovCircle.Color = _G.Slider.FovColor
+    SilentFovCircle.Color = _G.FovColor
     SilentFovCircle.Visible = true
     SilentFovCircle.Transparency = 0.5
-    SilentFovCircle.NumSides = _G.Slider.FovSides
-    SilentFovCircle.Thickness = _G.Slider.FovT
+    SilentFovCircle.NumSides = _G.FovSides
+    SilentFovCircle.Thickness = _G.FovT
     silentClosetPlayer()
-    if _G.Raven.FovC == false or _G.Raven.Silent == false then
+    if _G.FovC == false or _G.Silent == false then
         SilentFovCircle.Visible = false
     end
 end)
@@ -1110,13 +1110,13 @@ ThemeManager:ApplyToTab(Tabs['UI Settings'])
 local old
 old = hookmetamethod(game, "__namecall", function(Self, ...)
     local Args = {...}
-    if Self.Name == "Shoot" and getgenv().Target ~= nil and _G.Ravel.Silent == true then
-        local base = getgenv().Target.Character[_G.Slider.SilentHitbox]
+    if Self.Name == "Shoot" and getgenv().Target ~= nil and _G.Silent == true then
+        local base = getgenv().Target.Character[_G.SilentHitbox]
         local velocity = base.AssemblyLinearVelocity
-        local aimpos = base.Position + (velocity * Vector3.new(_G.Slider.SilentDirec / 200, 0, _G.Slider.SilentDirec / 200))
+        local aimpos = base.Position + (velocity * Vector3.new(_G.SilentDirec / 200, 0, _G.SilentDirec / 200))
         Args[3] = aimpos
-        if _G.Ravel.Wallbang == true then
-            Args[2] = getgenv().Target.Character[_G.Slider.SilentHitbox].Position
+        if _G.Wallbang == true then
+            Args[2] = getgenv().Target.Character[_G.SilentHitbox].Position
         end
         return old(Self, unpack(Args))
     end
