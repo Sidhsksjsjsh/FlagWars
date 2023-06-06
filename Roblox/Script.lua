@@ -780,7 +780,7 @@ Tab2:AddToggle({
 Name = "Bullet Track",
 Default = false,
 Callback = function(Value)
-     _G.Raven.SilentC = Value
+     _G.Raven.Silent = Value
 end
 })
 
