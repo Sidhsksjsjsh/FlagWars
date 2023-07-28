@@ -489,8 +489,6 @@ Callback = function()
     game:GetService("ReplicatedStorage").WeaponsSystem.Network.WeaponHit:FireServer(unpack(args))
     end
     end
-        
-   notify.new("success","Cheat Enabled ( Sniper )","start killing all enemies")
 end
 })
 
