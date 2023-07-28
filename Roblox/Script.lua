@@ -27,7 +27,7 @@ PremiumOnly = false
 })
 
 local Tab5 = Window:MakeTab({
-Name = "Character",
+Name = "Script",
 Icon = "rbxassetid://4483345998",
 PremiumOnly = false
 })
@@ -757,6 +757,13 @@ for i,v in pairs(game.Workspace:GetDescendants()) do
 end
     })
 
+Tab5:AddButton({
+Name = "Flag Wars V2",
+Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Sidhsksjsjsh/FlagWarsScriptV2/main/CykaBlyat.lua"))()
+        -- notify.new("success","Silent Aim","Silent Aim Enabled, bullets will follow the movement of the enemy")
+end
+})
 
 local Workspace = game:GetService("Workspace")
 local Players = game:GetService("Players")
