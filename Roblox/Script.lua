@@ -151,7 +151,7 @@ esp.TextColor3 = esp_settings.colour -- text colour
 esp.Visible = false
 -- game:GetService("Workspace").Core.Drops["Stranded Yacht"].Hitbox
 
-RunService.RenderStepped:Connect(function() ---- loops faster than a while loop :)
+game:GetService("RunService").RenderStepped:Connect(function() ---- loops faster than a while loop :)
     for i,v in pairs(game:GetService("Workspace").Core.Drops:GetChildren()) do
     if v:IsA("BasePart") then
         if v.Hitbox:FindFirstChild("Cracked esp") == nil then
