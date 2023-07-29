@@ -1,6 +1,7 @@
 local OrionLib = loadstring(game:HttpGet("https://pastebin.com/raw/NMEHkVTb"))()
 
 local Window = OrionLib:MakeWindow({Name = "VIP Turtle Hub V3", HidePremium = false, SaveConfig = true, ConfigFolder = "TurtleFi"})
+local TweenService = game:GetService("TweenService")
 
 local Tab = Window:MakeTab({
 Name = "Main",
@@ -38,8 +39,105 @@ Icon = "rbxassetid://4483345998",
 PremiumOnly = false
 })
 
+function FuckTable(tbl,val)
+	if tbl == nil then return false end
+	for _,v in pairs(tbl) do
+		if v == val then return true end
+	end 
+	return false
+end
+
+function GetTable(Table, Name)
+	for i = 1, #Table do
+		if Table[i] == Name then
+			return i
+		end
+	end
+	return false
+end
+
+local XrayToggle = false
+local GetEspParts = {}
+local GetPartEspTrigger = nil
+function XrayPart(part)
+	if #espParts > 0 then
+		if FuckTable(GetEspParts,part.Name:lower()) then
+			local a = Instance.new("BoxHandleAdornment")
+			a.Name = part.Name:lower().."_PESP"
+			a.Parent = part
+			a.Adornee = part
+			a.AlwaysOnTop = true
+			a.ZIndex = 0
+			a.Size = part.Size
+			a.Transparency = 0.3
+			a.Color = BrickColor.new("Lime green")
+		end
+	else
+		GetPartEspTrigger:Disconnect()
+		GetPartEspTrigger = nil
+	end
+end
+
+local partEspName = ""
+function StartXray(prototype)
+if XrayToggle == true then
+partEspName = prototype
+	if not FuckTable(GetEspParts,partEspName) then
+		table.insert(GetEspParts,partEspName)
+		for i,v in pairs(workspace:GetDescendants()) do
+			if v:IsA("BasePart") and v.Name:lower() == partEspName then
+				local a = Instance.new("BoxHandleAdornment")
+				a.Name = partEspName.."_PESP"
+				a.Parent = v
+				a.Adornee = v
+				a.AlwaysOnTop = true
+				a.ZIndex = 0
+				a.Size = v.Size
+				a.Transparency = 0.3
+				a.Color = BrickColor.new("Lime green")
+			end
+		end
+	end
+	if GetPartEspTrigger == nil then
+		GetPartEspTrigger = game:GetService("Workspace").DescendantAdded:Connect(XrayPart)
+	end
+else
+partEspName = prototype
+		if FuckTable(GetEspParts,partEspName) then
+			table.remove(GetEspParts, GetTable(GetEspParts, partEspName))
+		end
+		for i,v in pairs(workspace:GetDescendants()) do
+			if v:IsA("BoxHandleAdornment") and v.Name == partEspName..'_PESP' then
+				v:Destroy()
+			end
+		end
+	else
+		GetPartEspTrigger:Disconnect()
+		GetPartEspTrigger = nil
+		GetEspParts = {}
+		for i,v in pairs(workspace:GetDescendants()) do
+			if v:IsA("BoxHandleAdornment") and v.Name:sub(-5) == '_PESP' then
+				v:Destroy()
+			end
+		end
+end
+end
+
+Tab6:AddToggle({
+Name = "ESP Treasure",
+Default = false,
+Callback = function(Value)
+XrayToggle = Value
+for i,v in pairs(game:GetService("Workspace").Core.Drops:GetChildren()) do
+        if v:IsA("BasePart") then
+           StartXray(v.Name)
+        end
+    end
+end
+})
+
 Tab:AddButton({
-Name = "Silent Aim V1",
+Name = "Bullet Tracker",
 Callback = function()
     local currPlayer = game:GetService('Players').LocalPlayer
     local servPlayer = game:GetService('Players')
@@ -729,7 +827,7 @@ end)
 --]]
 
 Tab3:AddButton({
-Name = "Rapid Fire & Infinite Ammo",
+Name = "Rapid Fire & Infinite Ammo & No-Recoil",
 Callback = function()
 local mt = getrawmetatable(game)
 setreadonly(mt, false)
@@ -770,13 +868,21 @@ end
 end
     })
 
+local GetHumanPos = CFrame.new(0,0,0)
 Tab4:AddButton({
-Name = "Teleport to flag (Kick Bypass)",
+Name = "Collect flag (Kick Bypass)",
 Callback = function()
+GetHumanPos = CFrame.new(game.Players.LocalPlayer.Character.HumanoidRootPart.Position)
 for i,v in pairs(game.Workspace:GetDescendants()) do
         if v:IsA("BasePart") then
             if v.Name:lower() == "flag" then
-                 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+		if not game.Players.LocalPlayer.Character.HumanoidRootPart.Position == v.CFrame then
+                 TweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(0.5, Enum.EasingStyle.Linear, Enum.EasingDirection.Out,0,false,0),{CFrame = v.CFrame}):Play()
+	 	 wait(5)
+		 TweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(0.5, Enum.EasingStyle.Linear, Enum.EasingDirection.Out,0,false,0),{CFrame = GetHumanPos}):Play()
+		else
+	  	 TweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(0.5, Enum.EasingStyle.Linear, Enum.EasingDirection.Out,0,false,0),{CFrame = GetHumanPos}):Play()
+		end
             end
         end
     end
