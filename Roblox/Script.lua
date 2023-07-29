@@ -168,8 +168,8 @@ SilentFovCircle.Color = Color3.fromRGB(228, 9, 191)
 SilentFovCircle.Filled = false
 SilentFovCircle.Visible = true
 SilentFovCircle.Transparency = 0.5
-SilentFovCircle.NumSides = 64
-SilentFovCircle.Thickness = 5
+-- SilentFovCircle.NumSides = 64
+SilentFovCircle.Thickness = 1
 
 
     function isSameTeam(player)
@@ -255,6 +255,7 @@ SilentFovCircle.Thickness = 5
                         Args[2]["part"] = target.Character[getgenv().GameSettings.SilentAim.hitpart]
 			Args[2]["p"] = Vector3.new(target.Character[getgenv().GameSettings.SilentAim.hitpart].Position)
 			Args[2]["n"] = Vector3.new(target.Character[getgenv().GameSettings.SilentAim.hitpart].Position)
+			Args[2]["h"] = target.Character[getgenv().GameSettings.SilentAim.hitpart]
                         return self.FireServer(self, unpack(Args))
                     end
                 end
