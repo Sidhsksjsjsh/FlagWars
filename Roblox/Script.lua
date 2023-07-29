@@ -38,7 +38,7 @@ Name = "Treasure",
 Icon = "rbxassetid://4483345998",
 PremiumOnly = false
 })
-
+--[[
 function FuckTable(tbl,val)
 	if tbl == nil then return false end
 	for _,v in pairs(tbl) do
@@ -135,7 +135,7 @@ for i,v in pairs(game:GetService("Workspace").Core.Drops:GetChildren()) do
     end
 end
 })
-
+]]
 Tab:AddButton({
 Name = "Bullet Tracker",
 Callback = function()
