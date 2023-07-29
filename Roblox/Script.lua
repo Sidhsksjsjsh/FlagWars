@@ -173,7 +173,7 @@ esp.Visible = false
 
 RunService.RenderStepped:Connect(function()
     for i,v in pairs(game:GetService("Workspace").Core.Drops:GetChildren()) do
-    if v:IsA("BasePart") then
+    if v:IsA("UnionOperation") then
         if v.Hitbox:FindFirstChild("Cracked esp") == nil then
             esp.Text = "[ "..v.Name.." ]"
             gui:Clone().Parent = v.Hitbox
