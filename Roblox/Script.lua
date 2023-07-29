@@ -32,6 +32,12 @@ Icon = "rbxassetid://4483345998",
 PremiumOnly = false
 })
 
+local Tab6 = Window:MakeTab({
+Name = "Treasure",
+Icon = "rbxassetid://4483345998",
+PremiumOnly = false
+})
+
 Tab:AddButton({
 Name = "Silent Aim V1",
 Callback = function()
@@ -57,13 +63,15 @@ Callback = function()
     }
 
 
-    local FOVring = Drawing.new("Circle")
-FOVring.Visible = true
-FOVring.Thickness = 1.5
-FOVring.Radius = 100
-FOVring.Transparency = 0
-FOVring.Color = Color3.fromRGB(228, 9, 191)
-FOVring.Position = currCamera.ViewportSize/2
+local SilentFovCircle = Drawing.new('Circle')
+SilentFovCircle.Position = Vector2.new(currCamera.ViewportSize.X / 2, currCamera.ViewportSize.Y / 2)
+SilentFovCircle.Radius = 100
+SilentFovCircle.Color = Color3.fromRGB(228, 9, 191)
+SilentFovCircle.Filled = false
+SilentFovCircle.Visible = true
+SilentFovCircle.Transparency = 0.5
+SilentFovCircle.NumSides = 64
+SilentFovCircle.Thickness = 5
 
 
     function isSameTeam(player)
@@ -121,7 +129,23 @@ FOVring.Position = currCamera.ViewportSize/2
         local gmt = getrawmetatable(game)
         setreadonly(gmt, false)
         local oldNamecall = gmt.__namecall
-    
+
+--[[local args = {
+        [1] = game:GetService("Players").LocalPlayer.Character[currWeapon],
+        [2] = {
+            ["p"] = Vector3.new(127.24491882324219, 16.624034881591797, -84.08683776855469),
+            ["pid"] = 1,
+            ["part"] = v.Character.Head,
+            ["d"] = 80.71643829345703,
+            ["maxDist"] = 80.71429443359375,
+            ["h"] = v.Character.Humanoid,
+            ["m"] = Enum.Material.SmoothPlastic,
+            ["sid"] = 1,
+            ["t"] = 0.8510603182300679,
+            ["n"] = Vector3.new(-0.20354677736759186, -0.016248714178800583, 0.9789304733276367)
+        }
+}
+]]
         gmt.__namecall =
             newcclosure(
             function(self, ...)
@@ -131,6 +155,8 @@ FOVring.Position = currCamera.ViewportSize/2
                     target = isClosestPlayer()
                     if target then
                         Args[2]["part"] = target.Character[getgenv().GameSettings.SilentAim.hitpart]
+			Args[2]["p"] = Vector.new(target.Character[getgenv().GameSettings.SilentAim.hitpart].Position)
+			Args[2]["n"] = Vector.new(target.Character[getgenv().GameSettings.SilentAim.hitpart].Position)
                         return self.FireServer(self, unpack(Args))
                     end
                 end
@@ -306,7 +332,7 @@ loop = RunService.RenderStepped:Connect(function()
    end
 end)
 end)
---]]
+--
 Tab:AddButton({
 Name = "Silent Aim V2",
 Callback = function()
@@ -417,7 +443,7 @@ end)
 
 end
 })
-
+--]]
 Tab:AddButton({
 Name = "Trigger Bot",
 Callback = function()
@@ -756,6 +782,18 @@ for i,v in pairs(game.Workspace:GetDescendants()) do
     end
 end
     })
+--[[
+Tab6:AddButton({
+Name = "ESP Treasure",
+Callback = function()
+for i,v in pairs(game:GetService("Workspace").Core.Drops:GetChildren()) do
+        if v:IsA("BasePart") then
+           game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+        end
+    end
+end
+})
+]]
 
 Tab5:AddButton({
 Name = "Flag Wars V2",
