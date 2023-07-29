@@ -2,6 +2,26 @@ local OrionLib = loadstring(game:HttpGet("https://pastebin.com/raw/NMEHkVTb"))()
 
 local Window = OrionLib:MakeWindow({Name = "VIP Turtle Hub V3", HidePremium = false, SaveConfig = true, ConfigFolder = "TurtleFi"})
 local TweenService = game:GetService("TweenService")
+local RunService = game:GetService("RunService")
+
+local mt = getrawmetatable(game)
+local old = mt.__namecall
+local protect = newcclosure or protect_function
+
+if not protect then
+protect = function(f) return f end
+end
+
+setreadonly(mt, false)
+mt.__namecall = protect(function(self, ...)
+local method = getnamecallmethod()
+if method == "Kick" then
+wait(9e9)
+return
+end
+return old(self, ...)
+end)
+hookfunction(game:GetService("Players").LocalPlayer.Kick,protect(function() wait(9e9) end))
 
 local Tab = Window:MakeTab({
 Name = "Main",
@@ -151,7 +171,7 @@ esp.TextColor3 = esp_settings.colour -- text colour
 esp.Visible = false
 -- game:GetService("Workspace").Core.Drops["Stranded Yacht"].Hitbox
 
-game:GetService("RunService").RenderStepped:Connect(function() ---- loops faster than a while loop :)
+RunService.RenderStepped:Connect(function()
     for i,v in pairs(game:GetService("Workspace").Core.Drops:GetChildren()) do
     if v:IsA("BasePart") then
         if v.Hitbox:FindFirstChild("Cracked esp") == nil then
