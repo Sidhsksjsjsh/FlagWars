@@ -253,8 +253,8 @@ SilentFovCircle.Thickness = 5
                     target = isClosestPlayer()
                     if target then
                         Args[2]["part"] = target.Character[getgenv().GameSettings.SilentAim.hitpart]
-			Args[2]["p"] = Vector.new(target.Character[getgenv().GameSettings.SilentAim.hitpart].Position)
-			Args[2]["n"] = Vector.new(target.Character[getgenv().GameSettings.SilentAim.hitpart].Position)
+			Args[2]["p"] = Vector3.new(target.Character[getgenv().GameSettings.SilentAim.hitpart].Position)
+			Args[2]["n"] = Vector3.new(target.Character[getgenv().GameSettings.SilentAim.hitpart].Position)
                         return self.FireServer(self, unpack(Args))
                     end
                 end
@@ -876,13 +876,9 @@ GetHumanPos = CFrame.new(game.Players.LocalPlayer.Character.HumanoidRootPart.Pos
 for i,v in pairs(game.Workspace:GetDescendants()) do
         if v:IsA("BasePart") then
             if v.Name:lower() == "flag" then
-		if not game.Players.LocalPlayer.Character.HumanoidRootPart.Position == v.CFrame then
-                 TweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(0.5, Enum.EasingStyle.Linear, Enum.EasingDirection.Out,0,false,0),{CFrame = v.CFrame}):Play()
+		TweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(0.5, Enum.EasingStyle.Linear, Enum.EasingDirection.Out,0,false,0),{CFrame = v.CFrame}):Play()
 	 	 wait(5)
 		 TweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(0.5, Enum.EasingStyle.Linear, Enum.EasingDirection.Out,0,false,0),{CFrame = GetHumanPos}):Play()
-		else
-	  	 TweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(0.5, Enum.EasingStyle.Linear, Enum.EasingDirection.Out,0,false,0),{CFrame = GetHumanPos}):Play()
-		end
             end
         end
     end
