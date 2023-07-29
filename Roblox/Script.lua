@@ -122,20 +122,54 @@ partEspName = prototype
 		end
 end
 end
+]]
+
+local esp_settings = { ---- table for esp settings 
+    textsize = 8,
+    colour = Color3.fromRGB(1,1,1)
+}
+ 
+local gui = Instance.new("BillboardGui")
+local esp = Instance.new("TextLabel",gui) ---- new instances to make the billboard gui and the textlabel
+ 
+ 
+ 
+gui.Name = "Cracked esp"; ---- properties of the esp
+gui.ResetOnSpawn = false
+gui.AlwaysOnTop = true;
+gui.LightInfluence = 0;
+gui.Size = UDim2.new(1.75, 0, 1.75, 0);
+esp.BackgroundColor3 = Color3.fromRGB(255, 255, 255);
+esp.Text = ""
+esp.Size = UDim2.new(0.0001, 0.00001, 0.0001, 0.00001);
+esp.BorderSizePixel = 4;
+esp.BorderColor3 = Color3.new(esp_settings.colour)
+esp.BorderSizePixel = 0
+esp.Font = "GothamSemibold"
+esp.TextSize = esp_settings.textsize
+esp.TextColor3 = esp_settings.colour -- text colour
+esp.Visible = false
+-- game:GetService("Workspace").Core.Drops["Stranded Yacht"].Hitbox
+
+RunService.RenderStepped:Connect(function() ---- loops faster than a while loop :)
+    for i,v in pairs(game:GetService("Workspace").Core.Drops:GetChildren()) do
+    if v:IsA("BasePart") then
+        if v.Hitbox:FindFirstChild("Cracked esp") == nil then
+            esp.Text = "[ "..v.Name.." ]"
+            gui:Clone().Parent = v.Hitbox
+    end
+end
+end
+end)
 
 Tab6:AddToggle({
 Name = "ESP Treasure",
 Default = false,
 Callback = function(Value)
-XrayToggle = Value
-for i,v in pairs(game:GetService("Workspace").Core.Drops:GetChildren()) do
-        if v:IsA("BasePart") then
-           StartXray(v.Name)
-        end
-    end
+esp.Visible = Value
 end
 })
-]]
+
 Tab:AddButton({
 Name = "Bullet Tracker",
 Callback = function()
@@ -160,7 +194,7 @@ Callback = function()
         }
     }
 
-
+--[[
 local SilentFovCircle = Drawing.new('Circle')
 SilentFovCircle.Position = Vector2.new(currCamera.ViewportSize.X / 2, currCamera.ViewportSize.Y / 2)
 SilentFovCircle.Radius = 100
@@ -170,7 +204,7 @@ SilentFovCircle.Visible = true
 SilentFovCircle.Transparency = 0.5
 -- SilentFovCircle.NumSides = 64
 SilentFovCircle.Thickness = 1
-
+]]
 
     function isSameTeam(player)
         if player.team ~= currPlayer.team and player.team ~= servTeams["Neutral"] then
@@ -262,6 +296,13 @@ SilentFovCircle.Thickness = 1
                 return oldNamecall(self, ...)
             end
         )
+
+OrionLib:MakeNotification({
+    Name = "Damage Tracker",
+    Content = "Auto Damage Enabled",
+    Image = "rbxassetid://0",
+    Time = 5
+})
 end
 })
 --[[
