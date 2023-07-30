@@ -146,7 +146,7 @@ end
 
 local esp_settings = { ---- table for esp settings 
     textsize = 8,
-    colour = Color3.fromRGB(1,1,1)
+    colour = Color3.fromRGB(75, 151, 75)
 }
  
 local gui = Instance.new("BillboardGui")
@@ -279,23 +279,6 @@ SilentFovCircle.Thickness = 1
         local gmt = getrawmetatable(game)
         setreadonly(gmt, false)
         local oldNamecall = gmt.__namecall
-
---[[local args = {
-        [1] = game:GetService("Players").LocalPlayer.Character[currWeapon],
-        [2] = {
-            ["p"] = Vector3.new(127.24491882324219, 16.624034881591797, -84.08683776855469),
-            ["pid"] = 1,
-            ["part"] = v.Character.Head,
-            ["d"] = 80.71643829345703,
-            ["maxDist"] = 80.71429443359375,
-            ["h"] = v.Character.Humanoid,
-            ["m"] = Enum.Material.SmoothPlastic,
-            ["sid"] = 1,
-            ["t"] = 0.8510603182300679,
-            ["n"] = Vector3.new(-0.20354677736759186, -0.016248714178800583, 0.9789304733276367)
-        }
-}
-]]
         gmt.__namecall =
             newcclosure(
             function(self, ...)
@@ -318,6 +301,39 @@ SilentFovCircle.Thickness = 1
 OrionLib:MakeNotification({
     Name = "Damage Tracker",
     Content = "Auto Damage Enabled",
+    Image = "rbxassetid://0",
+    Time = 5
+})
+end
+})
+--[[
+Tab:AddButton({
+Name = "Auto Dig Soil [ Test damage ]",
+Callback = function()
+local gmt = getrawmetatable(game)
+        setreadonly(gmt, false)
+        local oldNamecall = gmt.__namecall
+        gmt.__namecall =
+            newcclosure(
+            function(self, ...)
+                local Args = {...}
+                local method = getnamecallmethod()
+                if tostring(self) == "WeaponHit" and tostring(method) == "FireServer" then
+                    target = isClosestPlayer()
+                    if target then
+                        Args[2]["part"] = target.Character[getgenv().GameSettings.SilentAim.hitpart]
+			Args[2]["p"] = Vector3.new(target.Character[getgenv().GameSettings.SilentAim.hitpart].Position)
+			Args[2]["n"] = Vector3.new(target.Character[getgenv().GameSettings.SilentAim.hitpart].Position)
+			Args[2]["h"] = target.Character[getgenv().GameSettings.SilentAim.hitpart]
+                        return self.FireServer(self, unpack(Args))
+                    end
+                end
+                return oldNamecall(self, ...)
+            end
+        )
+OrionLib:MakeNotification({
+    Name = "Auto dig",
+    Content = "Equip shovel",
     Image = "rbxassetid://0",
     Time = 5
 })
@@ -930,7 +946,7 @@ end
 
 local GetHumanPos = CFrame.new(0,0,0)
 Tab4:AddButton({
-Name = "Collect flag (Kick Bypass)",
+Name = "Collect flag (Kick Bypass) (Tween)",
 Callback = function()
 GetHumanPos = CFrame.new(game.Players.LocalPlayer.Character.HumanoidRootPart.Position)
 for i,v in pairs(game.Workspace:GetDescendants()) do
@@ -939,6 +955,20 @@ for i,v in pairs(game.Workspace:GetDescendants()) do
 		TweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(0.5, Enum.EasingStyle.Linear, Enum.EasingDirection.Out,0,false,0),{CFrame = v.CFrame}):Play()
 	 	 wait(5)
 		 TweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(0.5, Enum.EasingStyle.Linear, Enum.EasingDirection.Out,0,false,0),{CFrame = GetHumanPos}):Play()
+            end
+        end
+    end
+end
+    })
+
+Tab4:AddButton({
+Name = "Collect flag (Kick Bypass) (Teleport)",
+Callback = function()
+GetHumanPos = CFrame.new(game.Players.LocalPlayer.Character.HumanoidRootPart.Position)
+for i,v in pairs(game.Workspace:GetDescendants()) do
+        if v:IsA("BasePart") then
+            if v.Name:lower() == "flag" then
+		OrionLib:Teleport(v)
             end
         end
     end
