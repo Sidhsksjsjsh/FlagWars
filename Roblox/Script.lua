@@ -52,7 +52,7 @@ Name = "Script",
 Icon = "rbxassetid://4483345998",
 PremiumOnly = false
 })
-
+--[[
 local Tab6 = Window:MakeTab({
 Name = "Treasure",
 Icon = "rbxassetid://4483345998",
@@ -168,7 +168,7 @@ esp.BorderSizePixel = 0
 esp.Font = "GothamSemibold"
 esp.TextSize = esp_settings.textsize
 esp.TextColor3 = esp_settings.colour -- text colour
-esp.Visible = false
+-- esp.Visible = false
 -- game:GetService("Workspace").Core.Drops["Stranded Yacht"].Hitbox
 
 RunService.RenderStepped:Connect(function()
@@ -179,7 +179,7 @@ RunService.RenderStepped:Connect(function()
     end
 end
 end)
-
+--[[
 Tab6:AddToggle({
 Name = "ESP Treasure",
 Default = false,
@@ -187,7 +187,7 @@ Callback = function(Value)
 esp.Visible = Value
 end
 })
-
+]]
 Tab:AddButton({
 Name = "Bullet Tracker",
 Callback = function()
@@ -288,8 +288,8 @@ SilentFovCircle.Thickness = 1
                     target = isClosestPlayer()
                     if target then
                         Args[2]["part"] = target.Character[getgenv().GameSettings.SilentAim.hitpart]
-			Args[2]["p"] = Vector3.new(target.Character[getgenv().GameSettings.SilentAim.hitpart].Position)
-			Args[2]["n"] = Vector3.new(target.Character[getgenv().GameSettings.SilentAim.hitpart].Position)
+			-- Args[2]["p"] = Vector3.new(target.Character[getgenv().GameSettings.SilentAim.hitpart].Position)
+			-- Args[2]["n"] = Vector3.new(target.Character[getgenv().GameSettings.SilentAim.hitpart].Position)
 			Args[2]["h"] = target.Character[getgenv().GameSettings.SilentAim.hitpart]
                         return self.FireServer(self, unpack(Args))
                     end
