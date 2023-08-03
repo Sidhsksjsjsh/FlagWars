@@ -52,6 +52,10 @@ Name = "Script",
 Icon = "rbxassetid://4483345998",
 PremiumOnly = false
 })
+
+local ChunkType = {}
+
+OrionLib:AddTable(game:GetService("Workspace").Core.CurrentDirt,ChunkType)
 --[[
 local Tab6 = Window:MakeTab({
 Name = "Treasure",
@@ -306,9 +310,9 @@ OrionLib:MakeNotification({
 })
 end
 })
---[[
+
 Tab:AddButton({
-Name = "Auto Dig Soil [ Test damage ]",
+Name = "Auto Dig Dirt [ Test ]",
 Callback = function()
 local gmt = getrawmetatable(game)
         setreadonly(gmt, false)
@@ -318,19 +322,17 @@ local gmt = getrawmetatable(game)
             function(self, ...)
                 local Args = {...}
                 local method = getnamecallmethod()
-                if tostring(self) == "WeaponHit" and tostring(method) == "FireServer" then
-                    target = isClosestPlayer()
+                if tostring(self) == "Dig" and tostring(method) == "FireServer" then
+                    -- target = isClosestPlayer()
                     if target then
-                        Args[2]["part"] = target.Character[getgenv().GameSettings.SilentAim.hitpart]
-			Args[2]["p"] = Vector3.new(target.Character[getgenv().GameSettings.SilentAim.hitpart].Position)
-			Args[2]["n"] = Vector3.new(target.Character[getgenv().GameSettings.SilentAim.hitpart].Position)
-			Args[2]["h"] = target.Character[getgenv().GameSettings.SilentAim.hitpart]
-                        return self.FireServer(self, unpack(Args))
+                        Args[2] = game:GetService("Workspace").Core.CurrentDirt[ChunkType].dirt
+			return self.FireServer(self, unpack(Args))
                     end
                 end
                 return oldNamecall(self, ...)
             end
         )
+			
 OrionLib:MakeNotification({
     Name = "Auto dig",
     Content = "Equip shovel",
