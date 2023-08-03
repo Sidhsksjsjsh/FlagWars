@@ -292,19 +292,26 @@ SilentFovCircle.Thickness = 1
                     target = isClosestPlayer()
                     if target then
                         Args[2]["part"] = target.Character[getgenv().GameSettings.SilentAim.hitpart]
-			-- Args[2]["p"] = Vector3.new(target.Character[getgenv().GameSettings.SilentAim.hitpart].Position)
+			-- Args[2]["dir"] = Vector3.new(target.Character[getgenv().GameSettings.SilentAim.hitpart].Position)
 			-- Args[2]["n"] = Vector3.new(target.Character[getgenv().GameSettings.SilentAim.hitpart].Position)
 			Args[2]["h"] = target.Character[getgenv().GameSettings.SilentAim.hitpart]
                         return self.FireServer(self, unpack(Args))
                     end
                 end
+		if tostring(self) == "WeaponFired" and tostring(method) == "FireServer" then
+                    target = isClosestPlayer()
+                    if target then
+                   Args[2]["dir"] = Vector3.new(target.Character[getgenv().GameSettings.SilentAim.hitpart].Position)
+		return self.FireServer(self, unpack(Args))
+		end
+	end
                 return oldNamecall(self, ...)
             end
         )
 
 OrionLib:MakeNotification({
     Name = "Damage Tracker",
-    Content = "Auto Damage Enabled",
+    Content = "Auto Damage Enabled \nMagic Bullet Enabled",
     Image = "rbxassetid://0",
     Time = 5
 })
@@ -324,10 +331,10 @@ local gmt = getrawmetatable(game)
                 local method = getnamecallmethod()
                 if tostring(self) == "Dig" and tostring(method) == "FireServer" then
                     -- target = isClosestPlayer()
-                    if target then
+                    -- if target then
                         Args[2] = game:GetService("Workspace").Core.CurrentDirt[ChunkType].dirt
 			return self.FireServer(self, unpack(Args))
-                    end
+                    -- end
                 end
                 return oldNamecall(self, ...)
             end
