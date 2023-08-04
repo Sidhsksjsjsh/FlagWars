@@ -175,12 +175,34 @@ esp.TextColor3 = esp_settings.colour -- text colour
 -- esp.Visible = false
 -- game:GetService("Workspace").Core.Drops["Stranded Yacht"].Hitbox
 
+getgenv().ESP_TOOL = {
+     Treasure = {
+        ["Game A-568"] = true
+     },
+     Flag = {
+        ["Game A-568"] = true
+     }
+}
+
 RunService.RenderStepped:Connect(function()
     for i,v in pairs(game:GetService("Workspace").Core.Drops:GetChildren()) do
        if v:FindFirstChild("Cracked esp") == nil then
             esp.Text = "[ "..v.Name.." ]"
             gui:Clone().Parent = v
+	    gui:Clone().Visible = getgenv().ESP_TOOL.Treasure["Game A-568"]
     end
+end
+end)
+--[[
+RunService.RenderStepped:Connect(function()
+for i,v in pairs(game.Workspace:GetDescendants()) do
+        if v:IsA("BasePart") then
+            if v:FindFirstChild("Cracked esp") == nil and v.Name:lower() == "flag" then
+               esp.Text = "[ "..v.Name.." ]"
+               gui:Clone().Parent = v
+	       gui:Clone().Visible = getgenv().ESP_TOOL.Flag["Game A-568"]
+	    end
+	end
 end
 end)
 --[[
@@ -516,15 +538,15 @@ loop = RunService.RenderStepped:Connect(function()
    end
 end)
 end)
---
+--]]
 Tab:AddButton({
-Name = "Silent Aim V2",
+Name = "Silent Aim",
 Callback = function()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/kalasthrowaway/stuff/main/flagwars.lua"))()
         -- notify.new("success","Silent Aim","Silent Aim Enabled, bullets will follow the movement of the enemy")
 end
 })
-
+--[[
 _G.BulletTrackT = nil
 Tab:AddButton({
 Name = "Silent Aim V3",
