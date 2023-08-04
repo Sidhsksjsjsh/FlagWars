@@ -301,8 +301,8 @@ SilentFovCircle.Thickness = 1
 		if tostring(self) == "WeaponFired" and tostring(method) == "FireServer" then
                     target = isClosestPlayer()
                     if target then
-                   Args[2]["dir"] = Vector3.new(target.Character.HumanoidRootPart.Position)
-		   Args[2]["origin"] = Vector3.new(currPlayer.Character.HumanoidRootPart.Position)
+                   Args[2]["dir"] = Vector3.new(math.random(572),math.random(572),math.random(572))
+		   -- Args[2]["origin"] = Vector3.new(currPlayer.Character.HumanoidRootPart.Position)
 		return self.FireServer(self, unpack(Args))
 		end
 	end
