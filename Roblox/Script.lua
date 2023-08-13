@@ -185,12 +185,14 @@ getgenv().ESP_TOOL = {
 }
 
 RunService.RenderStepped:Connect(function()
+if game:GetService("Workspace").Core:FindFirstChild("Drops") then
     for i,v in pairs(game:GetService("Workspace").Core.Drops:GetChildren()) do
        if v:FindFirstChild("Cracked esp") == nil then
             esp.Text = "[ "..v.Name.." ]"
             gui:Clone().Parent = v
 	    gui:Clone().Visible = getgenv().ESP_TOOL.Treasure["Game A-568"]
     end
+end
 end
 end)
 --[[
