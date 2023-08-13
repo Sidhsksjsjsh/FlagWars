@@ -30,7 +30,7 @@ PremiumOnly = false
 })
 
 local Tab2 = Window:MakeTab({
-Name = "Modded",
+Name = "Player ESP",
 Icon = "rbxassetid://4483345998",
 PremiumOnly = false
 })
@@ -48,10 +48,26 @@ PremiumOnly = false
 })
 
 local Tab5 = Window:MakeTab({
-Name = "Script",
+Name = "Interface",
 Icon = "rbxassetid://4483345998",
 PremiumOnly = false
 })
+
+local Tab6 = Window:MakeTab({
+Name = "Ability",
+Icon = "rbxassetid://4483345998",
+PremiumOnly = false
+})
+
+Tab6:AddParagraph("Coming Soon","Future Update")
+
+local Tab7 = Window:MakeTab({
+Name = "Game Bypass",
+Icon = "rbxassetid://4483345998",
+PremiumOnly = false
+})
+
+Tab7:AddParagraph("Client Bypass","Already Bypassed")
 
 local ChunkType = {}
 
@@ -217,7 +233,7 @@ end
 })
 ]]
 Tab:AddButton({
-Name = "Bullet Tracker",
+Name = "Bullet Tracker V1",
 Callback = function()
     local currPlayer = game:GetService('Players').LocalPlayer
     local servPlayer = game:GetService('Players')
@@ -542,7 +558,7 @@ end)
 end)
 --]]
 Tab:AddButton({
-Name = "Silent Aim",
+Name = "Bullet Tracker V2",
 Callback = function()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/kalasthrowaway/stuff/main/flagwars.lua"))()
         -- notify.new("success","Silent Aim","Silent Aim Enabled, bullets will follow the movement of the enemy")
